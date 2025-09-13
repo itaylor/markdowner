@@ -1,0 +1,41 @@
+{
+  "name": "markdowner",
+  "version": "1.0.0",
+  "description": "Convert various file formats to markdown using AI and specialized converters",
+  "type": "module",
+  "main": "./markdowner.js",
+  "bin": {
+    "markdowner": "./cli.js"
+  },
+  "exports": {
+    ".": "./markdowner.js",
+    "./docx": "./markdowner-docx.js",
+    "./image": "./markdowner-image.js",
+    "./pdf": "./markdowner-pdf.js",
+    "./pptx": "./markdowner-pptx.js",
+    "./txt": "./markdowner-txt.js",
+    "./xlsx": "./markdowner-xlsx.js",
+    "./stereotype": "./stereotype.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@adobe/helix-docx2md": "^4.0.0",
+    "commander": "^12.1.0",
+    "file-type": "^19.0.0",
+    "markdown-tables": "^2.0.1",
+    "ollama": "^0.5.0",
+    "pdf2square": "file:../pdf2square",
+    "pptx2md": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

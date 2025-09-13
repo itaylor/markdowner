@@ -1,3 +1,7 @@
+import markdownTables from "markdown-tables";
+
 export async function xlsx2md(pathToFile: string): Promise<string> {
-  //this uses `markdown-tables` to conver xlsx to markdown
+  // Use markdown-tables to convert xlsx to markdown
+  const markdownTable = markdownTables(pathToFile);
+  return markdownTable;
 }

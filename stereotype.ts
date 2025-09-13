@@ -1,11 +1,22 @@
 import { fileTypeFromFile } from "file-type";
 import path from "node:path";
 
+export type FileFormat =
+  | "pdf"
+  | "png"
+  | "jpg"
+  | "docx"
+  | "pptx"
+  | "xlsx"
+  | "txt"
+  | "csv"
+  | "unknown";
+
 /**
  * Returns one of:
  * pdf | png | jpg | docx | pptx | xlsx | txt | csv | unknown
  */
-export async function detectFormat(filePath) {
+export async function detectFormat(filePath: string): Promise<FileFormat> {
   const ft = await fileTypeFromFile(filePath);
 
   if (ft?.ext && ft.ext !== "txt") {
