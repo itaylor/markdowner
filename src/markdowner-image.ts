@@ -29,17 +29,15 @@ export async function img2md(
 
   // Create the prompt for image description
   const prompt = `Analyze this image and convert it to markdown format. Include:
-1. A brief descriptive title
-2. Detailed description of what you see in the image
-3. Any text that appears in the image
-4. Key visual elements, colors, and composition
-5. Format the output as clean, readable markdown
-
-Please be thorough and descriptive while maintaining markdown formatting.`;
+1. Summary of what you see in the image
+2. Any text that appears in the image
+3. Very short notes about unusual visual elements, colors, and composition
+4. Format the output as clean, readable markdown
+Return ONLY THE MARKDOWN, no additional comments, information, or prompts for further action`;
 
   // Send request to Ollama with the image
   const response = await ollama.generate({
-    model: "gemma2:27b",
+    model: "gemma3:27b",
     prompt: prompt,
     images: [base64Image],
     stream: false,

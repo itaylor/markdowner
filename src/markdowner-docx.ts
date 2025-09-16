@@ -7,10 +7,7 @@ export async function docx2md(pathToFile: string): Promise<string> {
 
   // Convert DOCX to markdown using Adobe Helix
   const markdown = await helixDocx2md(buffer, {
-    // Enable features for better conversion
-    styleHandling: "ignore", // Ignore Word styles for cleaner markdown
-    imageHandling: "embed", // Embed images as base64 (or 'link' for references)
-    tableHandling: "markdown", // Convert tables to markdown format
+    gridtables: false,
   });
 
   return markdown;
