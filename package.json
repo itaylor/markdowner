@@ -4,7 +4,7 @@
   "description": "Convert various file formats to markdown using AI and specialized converters",
   "main": "./markdowner.js",
   "bin": {
-    "markdowner": "./cli.js"
+    "markdowner": "./dist/cli.js"
   },
   "exports": {
     ".": "./markdowner.js",
@@ -34,6 +34,7 @@
     "ollama": "^0.5.0",
     "pdf2square": "file:../pdf2square",
     "pptx-in-html-out": "^0.0.2",
+    "readability": "link:@types/@mozilla/readability",
     "turndown": "^7.2.1",
     "turndown-plugin-gfm": "^1.0.2"
   },
