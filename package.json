@@ -1,5 +1,5 @@
 {
-  "name": "markdowner",
+  "name": "@itaylor/markdowner",
   "version": "1.0.0",
   "description": "Convert various file formats to markdown using AI and specialized converters",
   "main": "./markdowner.js",
@@ -20,21 +20,19 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "type-check": "tsc --noEmit",
-    "test": "pnpm run build && node --test dist/**/*.test.js"
+    "test": "npm run build && node --test dist/**/*.test.js"
   },
   "dependencies": {
     "@adobe/helix-docx2md": "^1.8.0",
+    "@itaylor/pdf2square": "^1.0.0",
     "@mozilla/readability": "^0.6.0",
     "@types/jsdom": "^21.1.7",
     "commander": "^12.1.0",
     "file-type": "^21.0.0",
     "jsdom": "^27.0.0",
     "markdown-tables": "^2.0.1",
-    "markdowner": "link:",
     "ollama": "^0.5.0",
-    "pdf2square": "file:../pdf2square",
     "pptx-in-html-out": "^0.0.2",
-    "readability": "link:@types/@mozilla/readability",
     "turndown": "^7.2.1",
     "turndown-plugin-gfm": "^1.0.2"
   },
