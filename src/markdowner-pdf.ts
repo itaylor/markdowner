@@ -1,4 +1,4 @@
-import { convert } from "pdf2square";
+import { convert } from "@itaylor/pdf2square";
 import { Ollama } from "ollama";
 
 export async function pdf2md(
