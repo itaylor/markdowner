@@ -1,6 +1,6 @@
 {
   "name": "@itaylor/markdowner",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Convert various file formats to markdown using AI and specialized converters",
   "main": "./markdowner.js",
   "bin": {
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@adobe/helix-docx2md": "^1.8.0",
-    "@itaylor/pdf2square": "^1.0.0",
+    "@itaylor/pdf2square": "^0.0.1",
     "@mozilla/readability": "^0.6.0",
     "@types/jsdom": "^21.1.7",
     "commander": "^12.1.0",

@@ -5,7 +5,7 @@ Convert various file formats to markdown using AI and specialized converters.
 ## Supported Formats
 
 - **PDF** (.pdf) - AI-powered conversion with image analysis
-- **Images** (.png, .jpg, .jpeg) - AI vision model describes content  
+- **Images** (.png, .jpg, .jpeg) - AI vision model describes content
 - **Word** (.docx) - Direct conversion
 - **PowerPoint** (.pptx) - Extract slides and content
 - **Excel** (.xlsx) - Convert to markdown tables
@@ -49,7 +49,7 @@ const markdown = await markdowner('./document.pdf', {
   ollamaUrl: 'http://localhost:11434'
 });
 
-// Without AI (faster)
+// Without AI (faster, worse)
 const markdown = await markdowner('./document.pdf', {
   ollamaUrl: null
 });
