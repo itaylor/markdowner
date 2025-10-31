@@ -2,20 +2,27 @@
   "name": "@itaylor/markdowner",
   "version": "0.0.1",
   "description": "Convert various file formats to markdown using AI and specialized converters",
-  "main": "./markdowner.js",
+  "license": "MIT",
+  "main": "./dist/markdowner.js",
   "bin": {
     "markdowner": "./dist/cli.js"
   },
   "exports": {
-    ".": "./markdowner.js",
-    "./docx": "./markdowner-docx.js",
-    "./image": "./markdowner-image.js",
-    "./pdf": "./markdowner-pdf.js",
-    "./pptx": "./markdowner-pptx.js",
-    "./txt": "./markdowner-txt.js",
-    "./xlsx": "./markdowner-xlsx.js",
-    "./stereotype": "./stereotype.js"
+    ".": "./dist/markdowner.js",
+    "./docx": "./dist/markdowner-docx.js",
+    "./image": "./dist/markdowner-image.js",
+    "./pdf": "./dist/markdowner-pdf.js",
+    "./pptx": "./dist/markdowner-pptx.js",
+    "./txt": "./dist/markdowner-txt.js",
+    "./xlsx": "./dist/markdowner-xlsx.js",
+    "./stereotype": "./dist/stereotype.js"
   },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",

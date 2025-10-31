@@ -29,7 +29,7 @@ export OPENAI_API_KEY="your-api-key-here"
 curl -fsSL https://ollama.com/install.sh | sh
 
 # Pull model and start server
-ollama pull gemma2:27b
+ollama pull gemma3:27b
 ollama serve
 ```
 
@@ -52,7 +52,7 @@ markdowner document.pdf \
 markdowner document.pdf \
   --openai-base-url http://remote:11434/v1 \
   --openai-api-key ollama \
-  --openai-model gemma2:27b
+  --openai-model gemma3:27b
 
 # Legacy Ollama syntax (still supported)
 markdowner file.pdf --ollama-url http://localhost:11434
@@ -80,7 +80,7 @@ const markdown = await markdowner('./document.pdf', {
   openai: {
     baseURL: 'http://localhost:11434/v1',
     apiKey: 'ollama', // required but unused
-    model: 'gemma2:27b',
+    model: 'gemma3:27b',
   },
 });
 

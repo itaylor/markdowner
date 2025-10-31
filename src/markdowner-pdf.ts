@@ -1,7 +1,5 @@
-import { convert } from '@itaylor/pdf2square';
-import { LLMClient, LLMOptions } from './llm-client';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { convert } from "@itaylor/pdf2square";
+import { LLMClient, LLMOptions } from "./llm-client";
 
 export async function pdf2md(
   pathToFile: string,
@@ -12,12 +10,12 @@ export async function pdf2md(
     maxPages: 20, // Reasonable limit for processing
     size: 896,
     dpi: 300,
-    format: 'png',
-    bg: '#ffffff',
+    format: "png",
+    bg: "#ffffff",
   });
 
   if (pdfPages.length === 0) {
-    throw new Error('No pages found in PDF');
+    throw new Error("No pages found in PDF");
   }
 
   // Initialize LLM client
@@ -25,8 +23,8 @@ export async function pdf2md(
 
   // If no LLM configuration, just return extracted text
   if (!llmClient) {
-    console.log('No LLM configuration provided, returning extracted text');
-    return pdfPages.map((page) => page.extractedText).join('\n\n---\n\n');
+    console.log("No LLM configuration provided, returning extracted text");
+    return pdfPages.map((page) => page.extractedText).join("\n\n---\n\n");
   }
 
   const markdownSections: string[] = [];
@@ -34,8 +32,7 @@ export async function pdf2md(
   // Process each page with AI
   for (const page of pdfPages) {
     // Create prompt for this page
-    const prompt =
-      `You are converting from PDF to Markdown.  You are given both an image of the rendered PDF and the raw text extracted from the PDF file.
+    const prompt = `You are converting from PDF to Markdown.  You are given both an image of the rendered PDF and the raw text extracted from the PDF file.
 Here is the raw extracted text from the PDF page:
 \`\`\`txt
 ${page.extractedText}
@@ -55,7 +52,7 @@ DO NOT return any extra text other than the Markdown, no comments or explanation
     try {
       const response = await llmClient.generate({
         prompt: prompt,
-        images: [page.base64EncodedImage.split('base64,')[1]],
+        images: [page.base64EncodedImage.split("base64,")[1]],
       });
 
       if (response.content) {
@@ -77,8 +74,8 @@ DO NOT return any extra text other than the Markdown, no comments or explanation
   }
 
   if (markdownSections.length === 0) {
-    throw new Error('No pages could be processed successfully');
+    throw new Error("No pages could be processed successfully");
   }
 
-  return markdownSections.join('\n\n---\n\n');
+  return markdownSections.join("\n\n---\n\n");
 }
