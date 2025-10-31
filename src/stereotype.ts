@@ -1,18 +1,18 @@
-import { fileTypeFromFile } from "file-type";
-import path from "node:path";
+import { fileTypeFromFile } from 'file-type';
+import path from 'node:path';
 
 const formats = [
-  "pdf",
-  "png",
-  "jpg",
-  "docx",
-  "pptx",
-  "xlsx",
-  "txt",
-  "csv",
-  "html",
-  "md",
-  "unknown",
+  'pdf',
+  'png',
+  'jpg',
+  'docx',
+  'pptx',
+  'xlsx',
+  'txt',
+  'csv',
+  'html',
+  'md',
+  'unknown',
 ] as const;
 export type FileFormat = (typeof formats)[number];
 
@@ -26,11 +26,11 @@ export async function detectFormat(filePath: string): Promise<FileFormat> {
 
   // file-type says "txt" (or couldn't identify) — use the extension as the tiebreaker
   const ext = path.extname(filePath).toLowerCase();
-  if (ext === ".csv") return "csv";
-  if (ext === ".txt") return "txt";
-  if (ext === ".html" || ext === ".htm") return "html";
-  if (ext === ".md") return "md";
+  if (ext === '.csv') return 'csv';
+  if (ext === '.txt') return 'txt';
+  if (ext === '.html' || ext === '.htm') return 'html';
+  if (ext === '.md') return 'md';
 
   // fall back if unrecognized
-  return "unknown";
+  return 'unknown';
 }

@@ -1,6 +1,6 @@
-import fs from "fs/promises";
-import { PPTXInHTMLOut } from "pptx-in-html-out";
-import { htmlstr2md } from "./markdowner-html";
+import fs from 'fs/promises';
+import { PPTXInHTMLOut } from 'pptx-in-html-out';
+import { htmlstr2md } from './markdowner-html';
 
 export async function pptx2md(pathToFile: string): Promise<string> {
   // Read your PPTX file into a buffer
@@ -19,5 +19,5 @@ export async function pptx2md(pathToFile: string): Promise<string> {
       return slideMd;
     }),
   );
-  return mds.join("\n\n---\n\n");
+  return mds.join('\n\n---\n\n');
 }

@@ -1,8 +1,8 @@
 // src/types/pptx-in-html-out.d.ts
-declare module "pptx-in-html-out" {
-  import JSZip from "jszip";
-  import type { Metadata } from "sharp";
-  import type { Worker } from "tesseract.js";
+declare module 'pptx-in-html-out' {
+  import JSZip from 'jszip';
+  import type { Metadata } from 'sharp';
+  import type { Worker } from 'tesseract.js';
 
   export interface HtmlOptions {
     includeStyles?: boolean;

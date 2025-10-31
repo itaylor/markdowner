@@ -1,18 +1,15 @@
-import { basename } from "node:path";
-
-import { Ollama } from "ollama";
-import fs from "node:fs/promises";
-import path from "node:path";
+import { basename } from 'node:path';
+import { LLMClient, LLMOptions } from './llm-client';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export async function img2md(
   pathToFile: string,
-  options: {
-    ollamaUrl: string | null;
-  },
+  options: LLMOptions,
 ): Promise<string> {
   // Check if file exists and is an image
   const ext = path.extname(pathToFile).toLowerCase();
-  if (![".png", ".jpg", ".jpeg"].includes(ext)) {
+  if (!['.png', '.jpg', '.jpeg'].includes(ext)) {
     throw new Error(
       `Unsupported image format: ${ext}. Only PNG and JPG are supported.`,
     );
@@ -20,12 +17,14 @@ export async function img2md(
 
   // Read the image file and convert to base64
   const imageBuffer = await fs.readFile(pathToFile);
-  const base64Image = imageBuffer.toString("base64");
+  const base64Image = imageBuffer.toString('base64');
 
-  // Initialize Ollama client
-  const ollama = new Ollama({
-    host: options.ollamaUrl || "http://localhost:11434",
-  });
+  // Initialize LLM client
+  const llmClient = LLMClient.create(options);
+
+  if (!llmClient) {
+    throw new Error('LLM configuration is required for image processing');
+  }
 
   // Create the prompt for image description
   const prompt = `Analyze this image and convert it to markdown format. Include:
@@ -35,17 +34,15 @@ export async function img2md(
 4. Format the output as clean, readable markdown
 Return ONLY THE MARKDOWN, no additional comments, information, or prompts for further action`;
 
-  // Send request to Ollama with the image
-  const response = await ollama.generate({
-    model: "gemma3:27b",
+  // Send request to LLM with the image
+  const response = await llmClient.generate({
     prompt: prompt,
     images: [base64Image],
-    stream: false,
   });
 
-  if (!response.response) {
-    throw new Error("Empty response from Ollama");
+  if (!response.content) {
+    throw new Error('Empty response from LLM');
   }
 
-  return response.response;
+  return response.content;
 }

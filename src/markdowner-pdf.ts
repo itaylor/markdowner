@@ -1,42 +1,41 @@
-import { convert } from "@itaylor/pdf2square";
-import { Ollama } from "ollama";
+import { convert } from '@itaylor/pdf2square';
+import { LLMClient, LLMOptions } from './llm-client';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export async function pdf2md(
   pathToFile: string,
-  options: {
-    ollamaUrl: string | null;
-  },
+  options: LLMOptions,
 ): Promise<string> {
   // Convert PDF pages to base64 images using pdf2square
   const pdfPages = await convert(pathToFile, {
     maxPages: 20, // Reasonable limit for processing
     size: 896,
     dpi: 300,
-    format: "png",
-    bg: "#ffffff",
+    format: 'png',
+    bg: '#ffffff',
   });
 
   if (pdfPages.length === 0) {
-    throw new Error("No pages found in PDF");
+    throw new Error('No pages found in PDF');
   }
 
-  // If no Ollama URL, just return extracted text
-  if (!options.ollamaUrl) {
-    console.log("No Ollama URL provided, returning extracted text");
-    return pdfPages.map((page) => page.extractedText).join("\n\n---\n\n");
-  }
+  // Initialize LLM client
+  const llmClient = LLMClient.create(options);
 
-  // Initialize Ollama client
-  const ollama = new Ollama({
-    host: options.ollamaUrl,
-  });
+  // If no LLM configuration, just return extracted text
+  if (!llmClient) {
+    console.log('No LLM configuration provided, returning extracted text');
+    return pdfPages.map((page) => page.extractedText).join('\n\n---\n\n');
+  }
 
   const markdownSections: string[] = [];
 
   // Process each page with AI
   for (const page of pdfPages) {
     // Create prompt for this page
-    const prompt = `You are converting from PDF to Markdown.  You are given both an image of the rendered PDF and the raw text extracted from the PDF file.
+    const prompt =
+      `You are converting from PDF to Markdown.  You are given both an image of the rendered PDF and the raw text extracted from the PDF file.
 Here is the raw extracted text from the PDF page:
 \`\`\`txt
 ${page.extractedText}
@@ -52,18 +51,25 @@ Make sure you include:
 
 DO NOT return any extra text other than the Markdown, no comments or explanations about what you did.`;
 
-    // Send request to Ollama
-    const response = await ollama.generate({
-      model: "gemma3:27b",
-      prompt: prompt,
-      images: [page.base64EncodedImage.split("base64,")[1]],
-      stream: false,
-    });
+    // Send request to LLM
+    try {
+      const response = await llmClient.generate({
+        prompt: prompt,
+        images: [page.base64EncodedImage.split('base64,')[1]],
+      });
 
-    if (response.response) {
-      markdownSections.push(response.response);
-    } else {
-      // Fallback to extracted text
+      if (response.content) {
+        markdownSections.push(response.content);
+      } else {
+        // Fallback to extracted text
+        if (page.extractedText.trim()) {
+          markdownSections.push(page.extractedText);
+        }
+      }
+    } catch (error) {
+      console.warn(
+        `Failed to process page with LLM: ${error}. Falling back to extracted text.`,
+      );
       if (page.extractedText.trim()) {
         markdownSections.push(page.extractedText);
       }
@@ -71,8 +77,8 @@ DO NOT return any extra text other than the Markdown, no comments or explanation
   }
 
   if (markdownSections.length === 0) {
-    throw new Error("No pages could be processed successfully");
+    throw new Error('No pages could be processed successfully');
   }
 
-  return markdownSections.join("\n\n---\n\n");
+  return markdownSections.join('\n\n---\n\n');
 }
