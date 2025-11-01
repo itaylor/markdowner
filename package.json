@@ -1,15 +1,24 @@
 {
   "name": "@itaylor/markdowner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert various file formats to markdown using AI and specialized converters",
   "license": "MIT",
   "main": "./dist/markdowner.js",
   "bin": {
     "markdowner": "./dist/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itaylor/markdowner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itaylor/markdowner/issues"
+  },
+  "homepage": "https://github.com/itaylor/markdowner#readme",
   "exports": {
     ".": "./dist/markdowner.js",
     "./docx": "./dist/markdowner-docx.js",
+    "./html": "./dist/markdowner-html.js",
     "./image": "./dist/markdowner-image.js",
     "./pdf": "./dist/markdowner-pdf.js",
     "./pptx": "./dist/markdowner-pptx.js",
